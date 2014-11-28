@@ -1,21 +1,24 @@
-  namespace :assignments do
-  desc "list all"
-  task :list => :environment do
-    Assignment.all.each do |assignment|
-      p assignment
-    end
 
-  desc "find orphans"
-  task :find => :enviroment do
-    missing_a_person = Assignment.where.not(person_id: Person.pluck(:id))
-    missing_a_location = Assignment.where.not(location_id: Location.pluck(:id))
-    puts "There are #{missing_a_person} records without a person"
-    puts "There are #{missing_a_location} records without a person"
-  end
+
+
+  namespace :assignments do
+    desc "list all"
+    task :list => :environment do
+      Assignment.all.each do |assignment|
+        p assignment
+      end
+
+    desc "find orphans"
+    task :find => :enviroment do
+      missing_a_person = Assignment.where.not(person_id: Person.pluck(:id))
+      missing_a_location = Assignment.where.not(location_id: Location.pluck(:id))
+      puts "There are #{missing_a_person} records without a person"
+      puts "There are #{missing_a_location} records without a person"
+    end
 
   namespace :orphans do
     desc "delete orphans"
-  task :delete => :enviroment do
+    task :delete => :enviroment do
     missing_a_person = Assignment.where.not(person_id: Person.pluck(:id)).delete_all
     missing_a_location = Assignment.where.not(location_id: Location.pluck(:id)).delete_all
   end
